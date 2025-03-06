@@ -39,7 +39,7 @@ function ChartJSChart() {
         backgroundColor: 'rgba(136, 132, 216, 0.5)',
         borderWidth: 2,
         tension: 0, // Linear segments (no curve)
-        pointRadius: 2, // No dots at vertices
+        pointRadius: 0, // No dots at vertices
       },
       {
         label: 'Series 2',
@@ -48,7 +48,7 @@ function ChartJSChart() {
         backgroundColor: 'rgba(130, 202, 157, 0.5)',
         borderWidth: 2,
         tension: 0,
-        pointRadius: 2,
+        pointRadius: 0,
       },
       {
         label: 'Series 3',
@@ -57,7 +57,7 @@ function ChartJSChart() {
         backgroundColor: 'rgba(255, 198, 88, 0.5)',
         borderWidth: 2,
         tension: 0,
-        pointRadius: 2,
+        pointRadius: 0,
       },
     ],
   };
@@ -84,6 +84,9 @@ function ChartJSChart() {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        intersect: false,
       },
     },
   };

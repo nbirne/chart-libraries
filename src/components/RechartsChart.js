@@ -43,8 +43,16 @@ function RechartsChart() {
             horizontal={true}
             vertical={false}
           />
-          <XAxis dataKey="name" />
-          <YAxis />
+          <XAxis 
+            dataKey="name" 
+            tick={{ fontSize: 13 }}
+            height={50}
+            tickMargin={10}
+          />
+          <YAxis
+            tick={{ fontSize: 13 }}
+            width={50}
+          />
           <Tooltip />
           <Legend />
           <Line
