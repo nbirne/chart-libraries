@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,6 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -19,10 +20,14 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 function ChartJSChart() {
+  const chartRef = useRef(null);
+  const containerRef = useRef(null);
+  
   // Same data as in SampleChart.js
   const labels = [
     'Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024',
@@ -62,6 +67,34 @@ function ChartJSChart() {
     ],
   };
 
+  useEffect(() => {
+    // Add mouseleave event listener to the container
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('mouseleave', handleMouseLeave);
+    }
+    
+    return () => {
+      // Clean up event listener
+      if (container) {
+        container.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, []);
+  
+  const handleMouseLeave = () => {
+    if (chartRef.current) {
+      const chart = chartRef.current;
+      
+      // Reset all datasets to not fill when mouse leaves the chart
+      chart.data.datasets.forEach(dataset => {
+        dataset.fill = false;
+      });
+      
+      chart.update('none');
+    }
+  };
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -89,11 +122,33 @@ function ChartJSChart() {
         intersect: false,
       },
     },
+    hover: {
+      mode: 'nearest',
+      intersect: false,
+    },
+    onHover: (event, activeElements) => {
+      if (chartRef.current) {
+        const chart = chartRef.current;
+        
+        // Reset all datasets to not fill
+        chart.data.datasets.forEach(dataset => {
+          dataset.fill = false;
+        });
+        
+        // If hovering over a dataset, fill that one
+        if (activeElements && activeElements.length > 0) {
+          const datasetIndex = activeElements[0].datasetIndex;
+          chart.data.datasets[datasetIndex].fill = 'origin';
+        }
+        
+        chart.update('none'); // Update without animation for better performance
+      }
+    }
   };
 
   return (
-    <div style={{ width: '100%', height: 400 }}>
-      <Line options={options} data={data} />
+    <div ref={containerRef} style={{ width: '100%', height: 400 }}>
+      <Line ref={chartRef} options={options} data={data} />
     </div>
   );
 }
