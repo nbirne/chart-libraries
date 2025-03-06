@@ -25,7 +25,7 @@ const data = [
   { name: 'Dec 2024', SPRO_1: 700, series2: 800, series3: 900, series4: 700 },
 ];
 
-function SampleChart() {
+function RechartsChart() {
   return (
     <div style={{ width: '100%', height: 400 }}>
       <ResponsiveContainer>
@@ -77,4 +77,4 @@ function SampleChart() {
   );
 }
 
-export default SampleChart; 
+export default RechartsChart; 
