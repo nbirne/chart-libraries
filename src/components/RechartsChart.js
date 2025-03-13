@@ -11,18 +11,17 @@ import {
 } from 'recharts';
 
 const data = [
-  { name: 'Jan 2024', SPRO_1: 400, series2: 250, series3: 600, series4: 200 },
-  { name: 'Feb 2024', SPRO_1: 120, series2: 400, series3: 500, series4: 300 },
-  { name: 'Mar 2024', SPRO_1: 600, series2: 355, series3: 400, series4: 400 },
-  { name: 'Apr 2024', SPRO_1: 800, series2: 600, series3: 120, series4: 500 },
-  { name: 'May 2024', SPRO_1: 500, series2: 700, series3: 800, series4: 600 },
-  { name: 'Jun 2024', SPRO_1: 700, series2: 800, series3: 900, series4: 700 },
-  { name: 'Jul 2024', SPRO_1: 400, series2: 250, series3: 600, series4: 200 },
-  { name: 'Aug 2024', SPRO_1: 120, series2: 400, series3: 500, series4: 300 },
-  { name: 'Sep 2024', SPRO_1: 600, series2: 355, series3: 400, series4: 400 },
-  { name: 'Oct 2024', SPRO_1: 800, series2: 600, series3: 120, series4: 500 },
-  { name: 'Nov 2024', SPRO_1: 500, series2: 700, series3: 800, series4: 600 },
-  { name: 'Dec 2024', SPRO_1: 700, series2: 800, series3: 900, series4: 700 },
+  { name: 'Jan 2024', SPRO_1: 400, SPRO_2: 250, SPRO_3: 600, SPRO_4: 200 },
+  { name: 'Feb 2024', SPRO_1: 120, SPRO_2: 355, SPRO_3: 400, SPRO_4: 400 },
+  { name: 'Apr 2024', SPRO_1: 800, SPRO_2: 600, SPRO_3: 120, SPRO_4: 500 },
+  { name: 'May 2024', SPRO_1: 500, SPRO_2: 700, SPRO_3: 800, SPRO_4: 600 },
+  { name: 'Jun 2024', SPRO_1: 700, SPRO_2: 800, SPRO_3: 900, SPRO_4: 700 },
+  { name: 'Jul 2024', SPRO_1: 400, SPRO_2: 250, SPRO_3: 600, SPRO_4: 200 },
+  { name: 'Aug 2024', SPRO_1: 120, SPRO_2: 400, SPRO_3: 500, SPRO_4: 300 },
+  { name: 'Sep 2024', SPRO_1: 600, SPRO_2: 355, SPRO_3: 400, SPRO_4: 400 },
+  { name: 'Oct 2024', SPRO_1: 800, SPRO_2: 600, SPRO_3: 120, SPRO_4: 500 },
+  { name: 'Nov 2024', SPRO_1: 500, SPRO_2: 700, SPRO_3: 800, SPRO_4: 600 },
+  { name: 'Dec 2024', SPRO_1: 700, SPRO_2: 800, SPRO_3: 900, SPRO_4: 700 },
 ];
 
 function RechartsChart() {
@@ -65,16 +64,16 @@ function RechartsChart() {
           />
           <Line
             type="linear"
-            dataKey="series2"
-            name="Series 2"
+            dataKey="SPRO_2"
+            name="SPRO_2"
             stroke="#82ca9d"
             dot={false}
             strokeWidth={2}
           />
           <Line
             type="linear"
-            dataKey="series3"
-            name="Series 3"
+            dataKey="SPRO_3"
+            name="SPRO_3"
             stroke="#ffc658"
             dot={false}
             strokeWidth={2}
