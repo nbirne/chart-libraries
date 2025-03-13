@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import RechartsChart from './components/RechartsChart';
+import RechartsChartAreas from './components/RechartsChartAreas';
 import ChartJSChart from './components/ChartJSChart';
+import RechartsDonutChart from './components/RechartsDonutChart';
 
 function App() {
   return (
@@ -11,8 +13,16 @@ function App() {
       </header>
       <main>
         <section>
-          <h2>Recharts Version</h2>
+          <h2>Recharts Line Chart</h2>
           <RechartsChart />
+        </section>
+        <section>
+          <h2>Recharts Line Chart with Areas</h2>
+          <RechartsChartAreas />
+        </section>
+        <section>
+          <h2>Recharts Donut Chart</h2>
+          <RechartsDonutChart />
         </section>
         <section>
           <h2>Chart.js Version</h2>
