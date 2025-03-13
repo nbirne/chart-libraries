@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   LineChart,
   Line,
@@ -7,7 +7,10 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Area,
+  ComposedChart,
+  AreaChart
 } from 'recharts';
 
 const data = [
@@ -25,10 +28,58 @@ const data = [
 ];
 
 function RechartsChart() {
+  const [hoveredArea, setHoveredArea] = useState(null);
+  
+  const COLORS = {
+    SPRO_1: '#8884d8',
+    SPRO_2: '#82ca9d',
+    SPRO_3: '#ffc658'
+  };
+
+  // Custom tooltip that also tracks which area is being hovered
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      // Find the currently hovered data series
+      const hoveredEntry = payload.find(p => p.dataKey === hoveredArea);
+      
+      // If we have a hovered area and it matches one of the payload items
+      if (hoveredArea && hoveredEntry) {
+        return (
+          <div style={{ 
+            backgroundColor: 'white', 
+            padding: '10px', 
+            border: '1px solid #ccc',
+            borderRadius: '4px'
+          }}>
+            <p className="label">{`${payload[0].payload.name}`}</p>
+            <p style={{ color: hoveredEntry.color }}>
+              {`${hoveredEntry.name}: ${hoveredEntry.value}`}
+            </p>
+          </div>
+        );
+      }
+      
+      // If no specific area is being hovered or the hovered area doesn't match
+      // Don't show the tooltip
+      return null;
+    }
+    return null;
+  };
+
+  // Handle mouse enter for each area
+  const handleMouseEnter = (dataKey) => {
+    setHoveredArea(dataKey);
+  };
+
+  // Handle mouse leave
+  const handleMouseLeave = () => {
+    setHoveredArea(null);
+  };
+
   return (
     <div style={{ width: '100%', height: 400 }}>
       <ResponsiveContainer>
-        <LineChart
+        <AreaChart
           data={data}
           margin={{
             top: 5,
@@ -36,6 +87,7 @@ function RechartsChart() {
             left: 20,
             bottom: 5,
           }}
+          onMouseLeave={handleMouseLeave}
         >
           <CartesianGrid 
             strokeDasharray="3 0" 
@@ -52,33 +104,49 @@ function RechartsChart() {
             tick={{ fontSize: 13 }}
             width={50}
           />
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
           <Legend />
-          <Line
+          
+          {/* Areas for all series - only the hovered one will be filled */}
+          <Area
             type="linear"
             dataKey="SPRO_1"
             name="SPRO 1"
-            stroke="#8884d8"
-            dot={false}
+            stroke={COLORS.SPRO_1}
+            fill={COLORS.SPRO_1}
+            fillOpacity={hoveredArea === 'SPRO_1' ? 0.4 : 0}
             strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 6, fill: COLORS.SPRO_1 }}
+            onMouseEnter={() => handleMouseEnter('SPRO_1')}
           />
-          <Line
+          
+          <Area
             type="linear"
             dataKey="SPRO_2"
-            name="SPRO_2"
-            stroke="#82ca9d"
-            dot={false}
+            name="SPRO 2"
+            stroke={COLORS.SPRO_2}
+            fill={COLORS.SPRO_2}
+            fillOpacity={hoveredArea === 'SPRO_2' ? 0.4 : 0}
             strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 6, fill: COLORS.SPRO_2 }}
+            onMouseEnter={() => handleMouseEnter('SPRO_2')}
           />
-          <Line
+          
+          <Area
             type="linear"
             dataKey="SPRO_3"
-            name="SPRO_3"
-            stroke="#ffc658"
-            dot={false}
+            name="SPRO 3"
+            stroke={COLORS.SPRO_3}
+            fill={COLORS.SPRO_3}
+            fillOpacity={hoveredArea === 'SPRO_3' ? 0.4 : 0}
             strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 6, fill: COLORS.SPRO_3 }}
+            onMouseEnter={() => handleMouseEnter('SPRO_3')}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );
